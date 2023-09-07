@@ -1,0 +1,24 @@
+.distance {
+    font-size: 14px;
+    line-height: 20px;
+    border: 1px solid var(--purple-dark);
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin:20.4px 0;
+    margin-right: 12px;
+    position: relative;
+    color: var(--purple-dark);
+
+    &:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-right: 6px solid var(--purple-dark);
+        right: -4px;
+        transform: rotate(45deg);
+        top: 7px;
+    }
+}

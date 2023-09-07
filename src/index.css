@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Roboto:wght@300;400;500;700&display=swap");
+
+body {
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  font-size: 400;
+  margin: 0;
+  padding: 0;
+  --white: #fff;
+  --grey: rgba(229, 231, 235, 1);
+  --black: rgba(55, 65, 81, 1);
+  --red: rgba(255, 0, 0, 1);
+  --purple-light: rgba(199, 209, 244, 1);
+  --purple-dark: rgba(119, 134, 210, 1);
+
+  color: var(--black);
+}
+
+p,
+h5 {
+  margin: 0;
+}
+
+input {
+  color: var(--black);
+}
+
+input[type="date"] {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+}

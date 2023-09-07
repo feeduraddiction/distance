@@ -1,0 +1,1 @@
+export type CityCoordinates = [string, number, number];
