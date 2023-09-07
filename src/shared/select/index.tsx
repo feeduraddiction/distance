@@ -1,7 +1,8 @@
-import { BaseSyntheticEvent, useState } from "react";
+import { BaseSyntheticEvent, useRef, useState } from "react";
 import { Input } from "../input";
 import { debounce } from "lodash";
 import classes from "./styles.module.scss";
+import { useClickOutside } from "../../lib/hooks";
 
 interface SelectProps {
   value?: string;
@@ -26,6 +27,7 @@ export const Select = ({
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const selectRef = useRef<HTMLDivElement>(null);
 
   const getData = async (keyword: string) => {
     try {
@@ -46,8 +48,10 @@ export const Select = ({
     setError(null);
   };
 
+  useClickOutside(selectRef, () => setInputValue(""));
+
   return (
-    <div className={classes.select}>
+    <div ref={selectRef} className={classes.select}>
       <Input
         value={value}
         register={register}
@@ -68,7 +72,6 @@ export const Select = ({
                 className={classes.option}
                 key={item}
                 onClick={() => {
-                  console.log("hm");
                   onSelect(item);
                   setInputValue("");
                 }}

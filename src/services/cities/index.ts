@@ -27,14 +27,14 @@ export const validateCities = async (
 ) => {
   await delay(500);
 
-  const cities = CITIES.map(([city]) => city);
+  const cities = CITIES.map(([city]) => city.toLowerCase());
 
-  if (!cities.includes(origin)) {
+  if (!cities.includes(origin.toLowerCase())) {
     return -2;
   }
 
-  const unvalidCityIndex = destinations.findIndex((destination) =>
-   !cities.includes(destination.cityName)
+  const unvalidCityIndex = destinations.findIndex(
+    (destination) => !cities.includes(destination.cityName.toLowerCase())
   );
 
   if (unvalidCityIndex >= 0) {

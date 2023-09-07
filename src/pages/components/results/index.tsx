@@ -34,13 +34,14 @@ export const Results = () => {
       <div className={classes.destinationsWrapper}>
         <div className={classes.distances}>
           {distances.map((distance) => (
-            <DistanceResults distance={distance} />
+            <DistanceResults key={Math.random()} distance={distance} />
           ))}
         </div>
         <div className={classes.destinations}>
           <DestinationResult isLast={false} destination={origin} />
           {destinations?.map((destination, index, array) => (
             <DestinationResult
+              key={Math.random()}
               destination={destination}
               isLast={index === array.length - 1}
             />
@@ -49,7 +50,7 @@ export const Results = () => {
       </div>
       <div className={classes.summary}>
         <h5>
-          {totalDistance?.toFixed(2)} <span>is total distance</span>
+          {totalDistance?.toFixed(2)} km <span>is total distance</span>
         </h5>
 
         <h5>

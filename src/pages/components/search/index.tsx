@@ -68,14 +68,15 @@ export const Search = () => {
       data.origin,
       data.destinations || []
     );
-    if (invalidIndex && invalidIndex >= 0) {
+
+    if (invalidIndex && invalidIndex === -2) {
+      setError("origin", { message: "City is not valid" });
+      return;
+    }
+    if (invalidIndex !== undefined && invalidIndex >= 0) {
       setError(`destinations.${invalidIndex}.cityName`, {
         message: "City is not valid",
       });
-      return;
-    }
-    if (invalidIndex && invalidIndex === -2) {
-      setError("origin", { message: "City is not valid" });
       return;
     }
 
@@ -101,20 +102,20 @@ export const Search = () => {
     );
   };
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "destinations" as never,
-  });
-
   const changePassangersHandler = (event: BaseSyntheticEvent) => {
     const { value } = event.currentTarget;
     updateQueryString("passangers", value);
   };
 
-  const changeDateHandler = (event: BaseSyntheticEvent) => {
+  const changeInputHandler = (name: string) => (event: BaseSyntheticEvent) => {
     const { value } = event.currentTarget;
-    updateQueryString("date", value);
+    updateQueryString(name, value);
   };
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "destinations" as never,
+  });
 
   return (
     <div className={classes.search}>
@@ -177,7 +178,7 @@ export const Search = () => {
               register={register}
               type="number"
               label="Passangers"
-              onChange={changePassangersHandler}
+              onChange={changeInputHandler("passangers")}
               errorMessage={errors.passangers?.message}
             />
           </div>
@@ -187,7 +188,7 @@ export const Search = () => {
               register={register}
               type="date"
               label="Date"
-              onChange={changeDateHandler}
+              onChange={changeInputHandler("date")}
               errorMessage={errors.date?.message}
             />
           </div>
