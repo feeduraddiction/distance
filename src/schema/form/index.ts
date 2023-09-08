@@ -11,10 +11,10 @@ export const citiesFormSchema = yup.object({
     })
   ),
   date: yup.string().required("Date is required"),
-  passangers: yup
+  passengers: yup
     .number()
-    .typeError("Passagners must be a number")
-    .required("Passangers required")
-    .integer("Passangers must be not decimal number")
+    .typeError("Passegners must be a number")
+    .required("Passengers required")
+    .integer("Passengers must be not decimal number")
     .min(1, "Minimum 1 passager"),
 });

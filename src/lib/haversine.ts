@@ -4,10 +4,8 @@ export const haversine = (
   lat2: number,
   lon2: number
 ): number => {
-  // Переводим градусы в радианы
   const toRadians = (angle: number) => (angle * Math.PI) / 180;
 
-  // Формула Haversine
   const dLat = toRadians(lat2 - lat1);
   const dLon = toRadians(lon2 - lon1);
   const a =
@@ -17,7 +15,7 @@ export const haversine = (
       Math.sin(dLon / 2) *
       Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distance = 6371 * c; // Радиус Земли в км
+  const distance = 6371 * c;
 
   return distance;
 };

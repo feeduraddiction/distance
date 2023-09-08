@@ -1,6 +1,5 @@
 import { BaseSyntheticEvent, useRef, useState } from "react";
 import { Input } from "../input";
-import { debounce } from "lodash";
 import classes from "./styles.module.scss";
 import { useClickOutside } from "../../lib/hooks";
 

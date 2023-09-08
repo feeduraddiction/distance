@@ -17,7 +17,7 @@ interface DestinationsForm {
   origin: string;
   destinations?: { cityName: string }[];
   date: string;
-  passangers: number;
+  passengers: number;
 }
 
 export const Search = () => {
@@ -41,7 +41,7 @@ export const Search = () => {
   const defaultValues: DestinationsForm = {
     origin: searchParams.get("origin") || "",
     date: searchParams.get("date") || "",
-    passangers: +searchParams.get("passangers")! || 0,
+    passengers: +searchParams.get("passengers")! || 0,
     destinations: getDestinationSearchParams(),
   };
 
@@ -100,11 +100,6 @@ export const Search = () => {
         ?.map((destination) => destination.cityName)
         .join(",") as string
     );
-  };
-
-  const changePassangersHandler = (event: BaseSyntheticEvent) => {
-    const { value } = event.currentTarget;
-    updateQueryString("passangers", value);
   };
 
   const changeInputHandler = (name: string) => (event: BaseSyntheticEvent) => {
@@ -171,15 +166,15 @@ export const Search = () => {
             Add destination
           </Button>
         </div>
-        <div className={classes.dateAndPassangers}>
+        <div className={classes.dateAndPassengers}>
           <div className={classes.input}>
             <Input
-              name="passangers"
+              name="passengers"
               register={register}
               type="number"
-              label="Passangers"
-              onChange={changeInputHandler("passangers")}
-              errorMessage={errors.passangers?.message}
+              label="Passengers"
+              onChange={changeInputHandler("passengers")}
+              errorMessage={errors.passengers?.message}
             />
           </div>
           <div className={classes.input}>

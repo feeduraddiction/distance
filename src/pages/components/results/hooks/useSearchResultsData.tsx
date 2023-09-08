@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import findDistances from "../../../../services/distance";
 
@@ -13,7 +12,7 @@ export const useSearchResultsData = () => {
     "en-EN",
     { month: "short", day: "2-digit", year: "numeric" }
   );
-  const passangers = +searchParams.get("passangers")! || 0;
+  const passangers = +searchParams.get("passengers")! || 0;
   const destinations = searchParams.get("destinations")?.split(",") || [];
   const origin = searchParams.get("origin") || "";
 
