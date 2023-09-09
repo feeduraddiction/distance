@@ -8,6 +8,7 @@ interface ButtonProps {
   form?: string;
   disabled?: boolean;
   onClick?: () => void;
+  id?: string;
 }
 
 export const Button = ({
@@ -16,10 +17,12 @@ export const Button = ({
   type = "button",
   form,
   disabled = false,
-  onClick
+  onClick,
+  id,
 }: ButtonProps) => {
   return (
     <button
+      id={id}
       onClick={onClick}
       disabled={disabled}
       type={type}

@@ -11,7 +11,7 @@ async function findDistances(
     destinations.unshift(origin);
 
     if (destinations.includes("Dijon")) {
-      throw new Error('Ошибка: город "Dijon" не может быть использован.');
+      throw new Error("City Dijon is forbidden");
     }
 
     const newDistances: number[] = [];
@@ -19,15 +19,15 @@ async function findDistances(
 
     for (let i = 1; i < destinations.length; i++) {
       const city2Name = destinations[i];
-      const city1 = CITIES.find((city) => city[0] === destinations[i - 1]);
-      const city2 = CITIES.find((city) => city[0] === city2Name);
+      const city1 = CITIES.find((city) => city[0].toLowerCase() === destinations[i - 1].toLowerCase());
+      const city2 = CITIES.find((city) => city[0].toLowerCase() === city2Name.toLowerCase());
 
       if (city1 && city2) {
         const distance = haversine(city1[1], city1[2], city2[1], city2[2]);
         newDistances.push(distance);
         totalDistance += distance;
       } else {
-        throw new Error(`Ошибка: город "${city2Name}" не найден.`);
+        throw new Error(` "${city2Name}" not found`);
       }
     }
 

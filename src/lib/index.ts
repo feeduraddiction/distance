@@ -1,3 +1,4 @@
 export * from './delay';
 export * from './haversine';
-export * from './updateQueryString';
+export * from './queryString';
+export * from './firstLetterUppercase';

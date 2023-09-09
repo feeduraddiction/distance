@@ -1,34 +1,35 @@
-import { useNavigate } from "react-router-dom";
 import classes from "./styles.module.scss";
-import { Button } from "../../../shared/button";
 import { DistanceResults } from "./components/distance";
 import { DestinationResult } from "./components/destination";
 import { useSearchResultsData } from "./hooks/useSearchResultsData";
+import { Loader, Button } from "../../../shared";
 
 export const Results = () => {
-  const navigate = useNavigate();
   const {
     error,
-    date,
+    localDate,
     destinations,
     distances,
     totalDistance,
     loadingRef,
     origin,
-    passangers,
+    passengers,
+    navigateBack,
   } = useSearchResultsData();
 
   if (error) {
     return (
       <div className={classes.resultsError}>
         Something went wrong
-        <Button onClick={() => navigate(-1)}>Back</Button>
+        <Button onClick={navigateBack}>Back</Button>
       </div>
     );
   }
 
   return loadingRef.current ? (
-    <div className={classes.resultsLoading}>Loading</div>
+    <div className={classes.resultsLoading}>
+      Calculating... <Loader />
+    </div>
   ) : (
     <div className={classes.results}>
       <div className={classes.destinationsWrapper}>
@@ -54,13 +55,13 @@ export const Results = () => {
         </h5>
 
         <h5>
-          {passangers}
-          <span>{`${passangers > 1 ? " passangers" : " passanger"}`}</span>
+          {passengers}
+          <span>{`${passengers > 1 ? " passengers" : " passanger"}`}</span>
         </h5>
-        <h5>{date}</h5>
+        <h5>{localDate}</h5>
       </div>
       <div className={classes.controls}>
-        <Button onClick={() => navigate(-1)}>Back</Button>
+        <Button onClick={navigateBack}>Back</Button>
       </div>
     </div>
   );

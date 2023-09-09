@@ -1,49 +1,19 @@
-import { getCities, validateCities } from "../../../services/cities";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { BaseSyntheticEvent } from "react";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { Select } from "../../../shared/select";
-import { citiesFormSchema } from "../../../schema/form";
-import classes from "./styles.module.scss";
-import queryString from "query-string";
-import { Input } from "../../../shared/input";
-import { Button } from "../../../shared/button";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router-dom";
+import { BaseSyntheticEvent } from "react";
+import { DestinationsForm, citiesFormSchema } from "../../../schema/form";
+import { getMappedQueryString, updateQueryString } from "../../../lib";
+import { Button, Input, Loader, Select } from "../../../shared";
+import { getCities } from "../../../services/cities";
 import { CrossIcon } from "../../../assets/img/svg";
 import { RoutesEnum } from "../../../schema/routes";
-import { updateQueryString } from "../../../lib/updateQueryString";
-
-interface DestinationsForm {
-  origin: string;
-  destinations?: { cityName: string }[];
-  date: string;
-  passengers: number;
-}
+import { useSearch } from "./hooks/useSearch";
+import classes from "./styles.module.scss";
 
 export const Search = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-
-  const getDestinationSearchParams = () => {
-    if (searchParams.get("destinations") === null) {
-      return [{ cityName: "" }];
-    }
-    return searchParams
-      .get("destinations")
-      ?.split(",")
-      .map((cityName) => {
-        return {
-          cityName,
-        };
-      });
-  };
-
-  const defaultValues: DestinationsForm = {
-    origin: searchParams.get("origin") || "",
-    date: searchParams.get("date") || "",
-    passengers: +searchParams.get("passengers")! || 0,
-    destinations: getDestinationSearchParams(),
-  };
+  const { defaultValues, validateCityNames } = useSearch();
 
   const {
     handleSubmit,
@@ -52,31 +22,18 @@ export const Search = () => {
     control,
     getValues,
     setError,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
   } = useForm<DestinationsForm>({
     resolver: yupResolver(citiesFormSchema),
+    mode: "onBlur",
     defaultValues,
   });
   const onSubmit: SubmitHandler<DestinationsForm> = async (data) => {
-    const destinationsString = data.destinations
-      ? data.destinations.map((destination) => destination.cityName).join(",")
-      : "";
-    const updatedData = { ...data, destinations: destinationsString };
-    const queryStringData = queryString.stringify(updatedData);
+    const queryStringData = getMappedQueryString(data);
 
-    const invalidIndex = await validateCities(
-      data.origin,
-      data.destinations || []
-    );
-
-    if (invalidIndex && invalidIndex === -2) {
-      setError("origin", { message: "City is not valid" });
-      return;
-    }
-    if (invalidIndex !== undefined && invalidIndex >= 0) {
-      setError(`destinations.${invalidIndex}.cityName`, {
-        message: "City is not valid",
-      });
+    const invalidFields = await validateCityNames(data);
+    if (invalidFields) {
+      setError(invalidFields.key, { message: invalidFields.message });
       return;
     }
 
@@ -159,6 +116,7 @@ export const Search = () => {
             </div>
           ))}
           <Button
+            id="add-new-destination"
             type="button"
             variant="blank"
             onClick={() => append({ cityName: "" })}
@@ -190,8 +148,12 @@ export const Search = () => {
         </div>
       </form>
       <div className={classes.submit}>
-        <Button type="submit" form="destinations" disabled={!isValid}>
-          Submit
+        <Button
+          type="submit"
+          form="destinations"
+          disabled={!isValid || isSubmitting}
+        >
+          {isSubmitting ? <Loader /> : "Submit"}
         </Button>
       </div>
     </div>

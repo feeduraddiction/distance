@@ -18,3 +18,10 @@ export const citiesFormSchema = yup.object({
     .integer("Passengers must be not decimal number")
     .min(1, "Minimum 1 passager"),
 });
+
+export interface DestinationsForm {
+  origin: string;
+  destinations?: { cityName: string }[];
+  date: string;
+  passengers: number;
+}
