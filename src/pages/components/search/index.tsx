@@ -25,7 +25,7 @@ export const Search = () => {
     formState: { errors, isValid, isSubmitting },
   } = useForm<DestinationsForm>({
     resolver: yupResolver(citiesFormSchema),
-    mode: "onBlur",
+    mode: "onTouched",
     defaultValues,
   });
   const onSubmit: SubmitHandler<DestinationsForm> = async (data) => {
@@ -153,7 +153,13 @@ export const Search = () => {
           form="destinations"
           disabled={!isValid || isSubmitting}
         >
-          {isSubmitting ? <Loader /> : "Submit"}
+          {isSubmitting ? (
+            <div className={classes.loaderContainer}>
+              <Loader />
+            </div>
+          ) : (
+            "Submit"
+          )}
         </Button>
       </div>
     </div>

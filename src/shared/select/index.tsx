@@ -1,7 +1,14 @@
-import { BaseSyntheticEvent, useRef, useState } from "react";
+import {
+  BaseSyntheticEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Input } from "../input";
 import classes from "./styles.module.scss";
 import { useClickOutside } from "../../lib/hooks";
+import { debounce } from "lodash";
 
 interface SelectProps {
   value?: string;
@@ -41,11 +48,19 @@ export const Select = ({
   };
 
   const chageCitySearchHandler = (event: BaseSyntheticEvent) => {
-    const { value } = event.currentTarget;
-    getData(value);
+    const { value } = event.target;
     setInputValue(value);
     setError(null);
   };
+
+  const debouncedChangeCitySearchHandler = useCallback(
+    debounce(chageCitySearchHandler, 300),
+    []
+  );
+
+  useEffect(() => {
+    getData(inputValue);
+  }, [inputValue]);
 
   useClickOutside(selectRef, () => setInputValue(""));
 
@@ -55,7 +70,7 @@ export const Select = ({
         value={value}
         register={register}
         name={name}
-        onChange={chageCitySearchHandler}
+        onChange={debouncedChangeCitySearchHandler}
         errorMessage={errorMessage}
         label={label}
       />

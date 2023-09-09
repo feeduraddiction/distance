@@ -31,6 +31,17 @@
 
     .submit {
         margin-top: 24px;
+
+        .loaderContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        button {
+            width: 100%;
+        }
     }
 }
 
@@ -38,6 +49,23 @@
     .search {
         .form {
             flex-direction: column;
+            width: 100%;
+
+            .destinationInputs,
+            .dateAndPassengers {
+                width: inherit;
+
+                .input {
+                    input {
+                        width: 100%;
+                    }
+                }
+            }
+
+        }
+
+        .submit {
+            width: 100%;
         }
     }
 }

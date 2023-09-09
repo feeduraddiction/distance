@@ -51,3 +51,20 @@
     justify-content: center;
     gap: 20px;
 }
+
+@media (max-width: 768px) {
+    .controls {
+        width: 100%;
+        button {
+            width: inherit;
+        }
+    }
+
+    .resultsError {
+        width: 100%;
+        button {
+            width: inherit;
+        }
+    }
+    
+}
