@@ -51,6 +51,9 @@
             flex-direction: column;
             width: 100%;
 
+
+
+
             .destinationInputs,
             .dateAndPassengers {
                 width: inherit;
@@ -60,6 +63,11 @@
                         width: 100%;
                     }
                 }
+
+            }
+
+            .destinationsInput {
+                width: calc(100% - 28px) !important;
             }
 
         }

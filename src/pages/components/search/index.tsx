@@ -90,7 +90,11 @@ export const Search = () => {
           {fields.map((item, index) => (
             <div
               key={item.id}
-              className={`${classes.input} ${classes.destinationsInput}`}
+              className={
+                index !== 0
+                  ? `${classes.input} ${classes.destinationsInput}`
+                  : `${classes.input}`
+              }
             >
               <Select
                 label="City of Destination"
