@@ -40,11 +40,17 @@
     left: 50%;
     border-radius: 8px;
     transform: translate(-50%, -50%);
-    min-width: 300px;
     max-width: 734px;
     width: 100%;
     min-height: 250px;
     padding: 60px 15px 24px 15px;
     background-color: var(--white);
     min-width: 300px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        max-width: 300px;
+    }
+    
 }
